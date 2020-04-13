@@ -83,8 +83,7 @@ def main():
     
     if not courses:
         print('No courses found.')
-    else:               
-        #print('ID Curso;Nombre Curso;ID Profesor;Nombre Profesor;Correo Profesor;Fecha de Creación;Ultima Actualización;Número de Estudiantes;Estado del Curso')
+    else:                       
         for course in courses:
             page_token = results.get('nextPageToken',None)            
             while page_token != None:
@@ -101,8 +100,7 @@ def main():
                         estuCont = 0
                     else:
                         for listaEstudiantes in datosEstudiantes:                            
-                            estuCont = estuCont + 1
-                    #print(course['id'],';', course['name'],';', course['ownerId'],';', teacherID['name']['fullName'],';', teacherID['emailAddress'],';', course['creationTime'],';', course['updateTime'],';', estuCont ,';', course['courseState'])                              
+                            estuCont = estuCont + 1                  
 
                     ws.cell(column = 1, row = contar, value ="{0}".format(str(course['id'])))
                     ws.cell(column = 2, row = contar, value ="{0}".format(str(course['name'])))
