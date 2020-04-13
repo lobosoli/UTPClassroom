@@ -4,7 +4,10 @@ Debido a la pandemia de SARS-COV-2 la clases presenciales en la Universidad Tecn
 
 Este Script en python su usa obtener las clases creadas y el numero de estudiantes matriculados en estas, logrando asi obtener información de seguimiento del semestre academico.
 
-La información obtenida varia del nivel de permisos del usuario que realiza la consulta, un usuario profesor solo podrá obtener la información de sus curos y un usuario administrador obtendrá la información de todos los cursos.
+La información obtenida varia del nivel de permisos del usuario que realiza la consulta:
+
+* Un usuario profesor solo podrá obtener la información de sus cursos. 
+* Un usuario administrador obtendrá la información de todos los cursos.
 
 
 
