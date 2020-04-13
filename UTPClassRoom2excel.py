@@ -20,9 +20,9 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly',
         'https://www.googleapis.com/auth/classroom.rosters.readonly',
         'https://www.googleapis.com/auth/classroom.profile.emails',
         'https://www.googleapis.com/auth/classroom.profile.photos',
-	    'https://www.googleapis.com/auth/drive', 
+	'https://www.googleapis.com/auth/drive', 
         'https://www.googleapis.com/auth/spreadsheets',
-	    'https://www.googleapis.com/auth/spreadsheets.readonly']
+	'https://www.googleapis.com/auth/spreadsheets.readonly']
 
 def check_auth(api, version):
     creds = None
