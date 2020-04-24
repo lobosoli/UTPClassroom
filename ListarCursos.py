@@ -1,3 +1,8 @@
+# ListarCursos.py
+# Adrian Ramirez <adr@utp.edu.co>
+# Available subject to the Apache 2.0 License
+# https://www.apache.org/licenses/LICENSE-2.0
+
 from __future__ import print_function
 
 import pickle
@@ -21,9 +26,9 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly',
         'https://www.googleapis.com/auth/classroom.rosters.readonly',
         'https://www.googleapis.com/auth/classroom.profile.emails',
         'https://www.googleapis.com/auth/classroom.profile.photos',
-	    'https://www.googleapis.com/auth/drive', 
+	'https://www.googleapis.com/auth/drive', 
         'https://www.googleapis.com/auth/spreadsheets',
-	    'https://www.googleapis.com/auth/spreadsheets.readonly']
+	'https://www.googleapis.com/auth/spreadsheets.readonly']
 
 def check_auth(api, version):
     creds = None
@@ -102,9 +107,6 @@ def main():
      
     # Number of rows   
     contar= 1
-
-    # Código primer curso creado
-    firstCourseID = '143087'
 
     courses = []
     page_token = None
