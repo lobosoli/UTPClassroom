@@ -22,9 +22,9 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly',
         'https://www.googleapis.com/auth/classroom.rosters.readonly',
         'https://www.googleapis.com/auth/classroom.profile.emails',
         'https://www.googleapis.com/auth/classroom.profile.photos',
-	    'https://www.googleapis.com/auth/drive', 
+	'https://www.googleapis.com/auth/drive', 
         'https://www.googleapis.com/auth/spreadsheets',
-	    'https://www.googleapis.com/auth/spreadsheets.readonly']
+	'https://www.googleapis.com/auth/spreadsheets.readonly']
 
 def check_auth(api, version):
     creds = None
@@ -184,7 +184,8 @@ def main():
                             contar=contar + 1
                             range_ = 'Sheet1!A' + str(contar) + ':J' + str(contar)
                             result = SHEETS.spreadsheets().values().update(spreadsheetId = spreadsheets_Id, range = range_,valueInputOption = 'RAW', body = Body).execute() 
-                            time.sleep(1)
+                            # Sleep time to avoid exceed quota 
+			    time.sleep(1)
             except HttpError as err:
                 # If the error is a rate limit or connection error, wait and try again.
                 if err.resp.status in [400, 403, 500, 503]:
