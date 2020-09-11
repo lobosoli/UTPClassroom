@@ -1,3 +1,7 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+ 
+
 from __future__ import print_function
 
 import pickle
@@ -22,9 +26,9 @@ SCOPES = ['https://www.googleapis.com/auth/classroom.courses.readonly',
         'https://www.googleapis.com/auth/classroom.rosters.readonly',
         'https://www.googleapis.com/auth/classroom.profile.emails',
         'https://www.googleapis.com/auth/classroom.profile.photos',
-	    'https://www.googleapis.com/auth/drive', 
+	'https://www.googleapis.com/auth/drive', 
         'https://www.googleapis.com/auth/spreadsheets',
-	    'https://www.googleapis.com/auth/spreadsheets.readonly',
+	'https://www.googleapis.com/auth/spreadsheets.readonly',
         'https://www.googleapis.com/auth/admin.reports.usage.readonly']
 
 def check_auth(user, api):
@@ -138,7 +142,7 @@ def listarCursos(fecha1_, fecha2_):
                         'sheetType': 'GRID',                
                         'gridProperties': 
                         {
-                            'rowCount': 6, 
+                            'rowCount': 7, 
                             'columnCount': 2
                         }
                     }
@@ -149,7 +153,8 @@ def listarCursos(fecha1_, fecha2_):
     # Create a new SpreadSheet
     spreadsheet = SHEETS.spreadsheets().create(body=spreadsheet_body, fields='spreadsheetId').execute()
     # Get Spreadsheet ID
-    spreadsheets_Id = spreadsheet.get('spreadsheetId')    
+    spreadsheets_Id = spreadsheet.get('spreadsheetId')      
+
     # Move the file to the new folder
     folder_id = '1nPFQPf3WOYMqmHxjrGQDAYaCvg-SDt3K'
     res = drive_service.files().update(fileId = spreadsheet.get('spreadsheetId'), addParents = folder_id, removeParents = 'root').execute()       
@@ -164,7 +169,7 @@ def listarCursos(fecha1_, fecha2_):
         ['Correo Profesor'],
         ['Fecha de Creación'],
         ['Ultima Actualización'],
-        ['Número de Estudintes'],
+        ['Número de Estudiantes'],
         ['Estado del Curso'],
     ]
     Body = {
@@ -175,9 +180,10 @@ def listarCursos(fecha1_, fecha2_):
     result = SHEETS.spreadsheets().values().update(spreadsheetId = spreadsheets_Id, range = range_, valueInputOption = 'RAW', body = Body).execute()   
     
     # Set Rows names
-    range_ = 'InfoConsolidada!A1:A6'
+    range_ = 'InfoConsolidada!A1:A7'
     values =[ 
-        ['Cursos Creados desde 2020-08-18'],        
+        ['Cursos Creados desde 2020-08-18'],
+        ['Cursos Creados desde 2014-06-24'],        
         ['Curso Activos Últimos 14 días'],
         ['Cursos con 0 Estudiantes'],
         ['Profesores Activos Últimos 14 días'],
@@ -197,11 +203,12 @@ def listarCursos(fecha1_, fecha2_):
     profesores_ = profesoresActivos( fecha1_ ) + profesoresActivos( fecha2_ )
     estudiantes_ = estudiantesActivos( fecha1_ ) + estudiantesActivos( fecha2_ )    
 
-    range_ = 'InfoConsolidada!B1:B6'
+    range_ = 'InfoConsolidada!B1:B7'
     values =[ 
-        [cursos_],        
+        [cursos_], 
+        ["=COUNTA(CursosActivos!A2:A20000)"],       
         [activos_],
-        ["=countif(CursosActivos!H2:H20000,\"=0\")"],
+        ["=COUNTIF(CursosActivos!H2:H20000,0)"],
         [profesores_],
         [estudiantes_],        
     ]
@@ -209,9 +216,10 @@ def listarCursos(fecha1_, fecha2_):
         'majorDimension' : 'ROWS',
         'values' : values,
     }    
+    
 
     # Update the spreadsheet
-    result = SHEETS.spreadsheets().values().update(spreadsheetId = spreadsheets_Id, range = range_, valueInputOption = 'RAW', body = Body).execute()     
+    result = SHEETS.spreadsheets().values().update(spreadsheetId = spreadsheets_Id, range = range_, valueInputOption = 'RAW', body = Body).execute()    
 
     # Number of rows   
     contar= 1    
@@ -271,8 +279,8 @@ def listarCursos(fecha1_, fecha2_):
                 # If the error is a rate limit or connection error, wait and try again.
                 if err.resp.status in [400, 403, 500, 503]:
                     time.sleep(500)
-                else: raise      
-                  
+                else: raise  
+
 
 def main():
     print("Por favor digite fecha para informe 14 días (YYYY-MM-DD): ")
